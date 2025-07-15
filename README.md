@@ -65,7 +65,7 @@ Follow these steps to get the RAG chatbot running on your local machine.
 
 - **Python 3.9+:** Ensure Python is installed on your system.
 - **Git:** For cloning the repository.
-- **Ollama:** Download and install Ollama from [ollama.ai](https://ollama.ai/).
+- **Docker & Docker Compose:** For running the local LLM via Ollama. Download and install from [www.docker.com](https://www.docker.com/).
 
 ### **1\. Clone the Repository**
 
@@ -98,20 +98,7 @@ With your virtual environment activated, install all required Python packages:
 pip install pyyaml langchain-community pypdf pandas beautifulsoup4 ollama chromadb  
 ```
 
-### **4\. Pull Ollama Models**
-
-You need to download the LLM and embedding models that your application will use. These are specified in config.yaml. By default, the configuration uses llama3 for the LLM and mixedbread for embeddings.
-
-Run these commands in your terminal:
-
-```
-ollama pull llama3.2:latest  
-ollama pull mxbai-embed-large  
-```
-
-_(If you change the llm_model or embedding_model in config.yaml, make sure to pull those specific models.)_
-
-### **5\. Prepare Your Data**
+### **4\. Prepare Your Data**
 
 Create the data/ directory in your project root and place your documents inside the respective subfolders (pdfs/, csvs/, texts/).
 
@@ -147,40 +134,39 @@ path: "./data/texts/faq.txt"
 
 ## **▶️ Running the Application**
 
-### **1\. Start the Ollama Server**
+### **1. Start the Ollama Docker Container**
 
-Open a **separate terminal window** and start the Ollama server. This server must be running for your Python application to interact with the LLMs and embedding models.
+Open a terminal window and start the Ollama server using Docker Compose. This command will download the necessary Docker image and start the container in the background.
 
 ```
-ollama serve  
+docker-compose up -d
 ```
 
-Leave this terminal window open and running throughout your session.
+The container is configured to automatically pull the `llama3.2` model on startup.
 
-### **2\. Prepare/Refresh the RAG Data**
+### **2. Prepare/Refresh the RAG Data**
 
 Open another terminal window, activate your virtual environment, and run the data preparation script. This will load your documents, chunk them, create embeddings, and store them in ChromaDB.
 
 ```
-python prep-data.py  
+python prep-data.py
 ```
 
-This command will perform a **full refresh**: it will delete any existing ChromaDB data in ./chroma_db and then re-ingest all documents specified in your config.yaml.
+This command will perform a **full refresh**: it will delete any existing ChromaDB data in `./chroma_db` and then re-ingest all documents specified in your `config.yaml`.
 
-### **3\. Launch the Chatbot UI**
+### **3. Launch the Chatbot UI**
 
-In the **same terminal** where you ran prep-data.py (with the virtual environment still active), launch the Streamlit application:
+In the **same terminal** where you ran `prep-data.py` (with the virtual environment still active), launch the Streamlit application:
 
 ```
-streamlit run app.py  
+streamlit run app.py
 ```
 
 This command will open a new tab in your default web browser, displaying the RAG chatbot interface.
 
-### **Stopping the Streamlit Service**
+### **Stopping the Application**
 
-To stop the Streamlit application, go to the terminal window where streamlit run app.py is executing and press Ctrl + C.
-
-- **Troubleshooting Ctrl + C:** If it doesn't stop immediately (common on Windows if the browser tab was closed), try opening the Streamlit app's URL (<http://localhost:8501>) in your browser again, then quickly return to the terminal and press Ctrl + C.
+- **To stop the Streamlit app:** Press `Ctrl + C` in the terminal where it's running.
+- **To stop the Ollama container:** Run `docker-compose down` in your project directory.
 
 You are now ready to interact with your LLM-powered RAG chatbot agent!
