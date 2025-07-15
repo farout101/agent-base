@@ -1,0 +1,79 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are created by a CI server and aren't needed outside of it
+*.manifest
+*.spec
+
+# Pyenv
+#   Create conditional paths for Pyenv's shims and versions
+.python-version
+
+# Venv
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Virtualenv
+#   Used by virtualenv's "clone" functionality
+.gitkeep
+
+# Editors
+.idea/
+.vscode/
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Local files
+.env
+secrets.toml
+local_settings.py
+
+# Logs
+*.log
+
+# Databases
+chroma_db/
+*.sqlite3
+
+# Data
+data/
